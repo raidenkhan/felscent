@@ -1,0 +1,303 @@
+/*
+ * FELSCENT motion stylesheet.
+ *
+ * Rule: animated *initial* states exist only inside the no-preference media
+ * query, so the base stylesheet renders final, visible content and SSR is
+ * always the readable page. One shared easing curve (--ease-editorial).
+ */
+
+/* ------------------------------------------------------------------ */
+/* Scroll Reveal                                                       */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s var(--ease-editorial) var(--reveal-delay, 0ms),
+      transform 0.9s var(--ease-editorial) var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-inview {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* SplitText                                                           */
+/* ------------------------------------------------------------------ */
+
+.split-root {
+  display: inline-block;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: pre;
+}
+
+.split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) {
+  .split-wave:hover .split-char {
+    animation: char-wave 0.7s var(--ease-editorial);
+    animation-delay: calc(var(--char-i) * 24ms);
+  }
+}
+
+@keyframes char-wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-0.16em);
+  }
+  70% {
+    transform: translateY(-0.03em);
+  }
+}
+
+/* Hero entrance: letters rise in once on load. */
+@media (prefers-reduced-motion: no-preference) {
+  .split-char-enter {
+    opacity: 0;
+    animation: char-enter 0.8s var(--ease-editorial) forwards;
+  }
+}
+
+@keyframes char-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Cursor                                                              */
+/* ------------------------------------------------------------------ */
+
+/* Native cursor is hidden only when JS is active (html.has-cursor), and
+   never on coarse pointers or reduced motion. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role="button"] {
+  cursor: none;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--color-foreground);
+  transition:
+    opacity 0.3s,
+    width 0.25s var(--ease-editorial),
+    height 0.25s var(--ease-editorial),
+    background-color 0.25s;
+}
+
+.cursor-dot[data-variant="link"],
+.cursor-dot[data-variant="view"] {
+  opacity: 0;
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--color-foreground) 55%, transparent);
+  border-radius: 9999px;
+  transition:
+    opacity 0.3s,
+    width 0.3s var(--ease-editorial),
+    height 0.3s var(--ease-editorial),
+    border-color 0.3s,
+    background-color 0.3s;
+}
+
+.cursor-ring[data-variant="link"] {
+  width: 44px;
+  height: 44px;
+  border-color: color-mix(in srgb, var(--color-rose) 70%, transparent);
+  background-color: color-mix(in srgb, var(--color-rose) 8%, transparent);
+}
+
+.cursor-ring[data-variant="view"] {
+  width: 76px;
+  height: 76px;
+  border-color: transparent;
+  background-color: color-mix(in srgb, var(--color-espresso) 92%, transparent);
+}
+
+.cursor-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-ivory);
+  opacity: 0;
+  transition: opacity 0.25s 0.1s;
+}
+
+.cursor-ring[data-variant="view"] .cursor-label {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Form microinteractions                                              */
+/* ------------------------------------------------------------------ */
+
+/* Self-drawing checkmark (stroke-dashoffset reveal on mount). */
+.check-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-check 0.7s var(--ease-editorial) 0.15s forwards;
+}
+
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.check-reveal {
+  animation: fade-in 0.6s var(--ease-editorial) both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Ambient — slow drifting ivory fields behind the page                */
+/* ------------------------------------------------------------------ */
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient::before,
+.ambient::after {
+  content: "";
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.ambient::before {
+  top: -12%;
+  right: -8%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-rose) 16%, transparent),
+    transparent 70%
+  );
+  animation: drift-a 38s ease-in-out infinite alternate;
+}
+
+.ambient::after {
+  bottom: -14%;
+  left: -10%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-taupe) 18%, transparent),
+    transparent 70%
+  );
+  animation: drift-b 46s 8s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-6vw, 8vh, 0) scale(1.15);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(7vw, -6vh, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient::before,
+  .ambient::after {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Page transitions — soft cross-fade via the View Transitions API     */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: 0.3s var(--ease-editorial) both vt-fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 0.45s var(--ease-editorial) 0.08s both vt-fade-in;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}

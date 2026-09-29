@@ -1,0 +1,512 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * FELSCENT design system — quiet luxury, editorial fragrance magazine.
+ * Warm ivory ground, soft black ink, muted rose accent, warm taupe rules.
+ * All colours are oklch tokens; components only use semantic classes.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 1px);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
+
+  --font-serif: "Bodoni Moda", "Didot", "Bodoni MT", Georgia, serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --font-script: "Pinyon Script", "Snell Roundhand", cursive;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  /* Brand palette */
+  --color-ivory: var(--ivory);
+  --color-ivory-deep: var(--ivory-deep);
+  --color-ink: var(--ink);
+  --color-espresso: var(--espresso);
+  --color-espresso-soft: var(--espresso-soft);
+  --color-rose: var(--rose);
+  --color-blush: var(--blush);
+  --color-taupe: var(--taupe);
+  --color-taupe-deep: var(--taupe-deep);
+
+  /* Dark feature section tokens */
+  --color-feature: var(--feature);
+  --color-feature-foreground: var(--feature-foreground);
+  --color-feature-muted: var(--feature-muted);
+  --color-feature-border: var(--feature-border);
+
+  /* Status tokens */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-up: fade-up 0.9s var(--ease-editorial) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+:root {
+  --radius: 0.125rem;
+
+  --ivory: oklch(0.956 0.011 84.6); /* #F4F0E8 */
+  --ivory-deep: oklch(0.92 0.017 84.6); /* #EAE4D8 */
+  --ink: oklch(0.197 0.005 67.5); /* #171513 */
+  --espresso: oklch(0.213 0.009 59.2); /* #1C1815 */
+  --espresso-soft: oklch(0.269 0.009 53.1); /* #2A2522 */
+  --rose: oklch(0.647 0.073 24.8); /* #B77D78 */
+  --blush: oklch(0.774 0.052 31.9); /* #D5AAA1 */
+  --taupe: oklch(0.681 0.035 67.2); /* #A89582 */
+  --taupe-deep: oklch(0.502 0.018 67.4); /* #6B6259 */
+
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: oklch(0.983 0.006 84.6);
+  --card-foreground: var(--ink);
+  --popover: oklch(0.983 0.006 84.6);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--ivory-deep);
+  --secondary-foreground: var(--ink);
+  --muted: var(--ivory-deep);
+  --muted-foreground: var(--taupe-deep);
+  --accent: var(--blush);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.55 0.16 25);
+  --destructive-foreground: var(--ivory);
+  --border: oklch(0.86 0.02 80);
+  --input: oklch(0.86 0.02 80);
+  --ring: var(--taupe);
+
+  --feature: var(--espresso);
+  --feature-foreground: var(--ivory);
+  --feature-muted: oklch(0.72 0.03 70);
+  --feature-border: oklch(1 0 0 / 14%);
+
+  --success: oklch(0.6 0.09 150);
+  --warning: oklch(0.72 0.12 70);
+
+  --chart-1: var(--rose);
+  --chart-2: var(--taupe);
+  --chart-3: var(--blush);
+  --chart-4: var(--taupe-deep);
+  --chart-5: var(--ink);
+  --sidebar: var(--ivory);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--ivory);
+  --sidebar-accent: var(--ivory-deep);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--taupe);
+}
+
+.dark {
+  --background: var(--espresso);
+  --foreground: var(--ivory);
+  --card: var(--espresso-soft);
+  --card-foreground: var(--ivory);
+  --popover: var(--espresso-soft);
+  --popover-foreground: var(--ivory);
+  --primary: var(--ivory);
+  --primary-foreground: var(--ink);
+  --secondary: var(--espresso-soft);
+  --secondary-foreground: var(--ivory);
+  --muted: var(--espresso-soft);
+  --muted-foreground: var(--feature-muted);
+  --accent: var(--rose);
+  --accent-foreground: var(--ivory);
+  --border: var(--feature-border);
+  --input: var(--feature-border);
+  --ring: var(--taupe);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.01em;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Prices and quantities: figures that don't jitter as values render. */
+  .tabular,
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* No single orphaned word on the last line of a paragraph. */
+  p {
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  /* Keyboard focus stays visible everywhere (skill checklist: visible focus). */
+  :focus-visible {
+    outline: 1px solid var(--color-taupe);
+    outline-offset: 3px;
+  }
+
+  /* Clickable things get the pointer, per the pre-delivery checklist. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background-color: var(--color-blush);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Editorial container: 12 columns desktop, 8 tablet, 4 mobile */
+@utility container-editorial {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 4rem;
+  }
+}
+
+@utility grid-editorial {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+}
+
+/* Small uppercase tracking label */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+/* Thin horizontal rule */
+@utility rule {
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-border);
+}
+
+/* Understated text link with a hairline underline */
+@utility link-hairline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-editorial);
+  }
+  &:hover::after {
+    transform: scaleX(0.4);
+  }
+}
+
+/* Serif display sizes */
+@utility text-display {
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  font-optical-sizing: auto;
+}
+
+@utility text-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1.1;
+  font-optical-sizing: auto;
+}
+
+@utility text-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1.18;
+  font-optical-sizing: auto;
+}
+
+/* Handwritten flourish, used sparingly — single words like an era signature. */
+@utility text-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Tactile image treatment: subtle grain-free warm tint on hover */
+@utility img-editorial {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease-editorial);
+  &:hover {
+    transform: scale(1.015);
+  }
+}
+
+/*
+ * Cinematic treatment for product photography — pulls any bottle shot toward
+ * the house look: warm ivory ground, gentle contrast, a whisper of grade.
+ * Deliberately subtle: it should flatter a good photo and quietly lift a
+ * plain one. Re-shoots (docs/product-reshoot-prompt.md) inherit it too.
+ */
+@utility img-cinematic {
+  filter: saturate(0.92) contrast(1.04) brightness(1.01) sepia(0.06);
+}
+
+@utility img-cinematic-dark {
+  /* For bottles on the espresso feature ground: warm the shadows, deepen slightly. */
+  filter: saturate(0.95) contrast(1.06) brightness(0.97) sepia(0.1);
+}
+
+/*
+ * Paper grain — a fixed, pointer-transparent overlay that breaks the
+ * digital flatness of large ivory fields (editorial-luxury texture rule).
+ * Inlined as a tiny SVG turbulence so no asset request is needed.
+ */
+@utility grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/*
+ * Quiet architecture for imagery — soft shapes, offset colour plates and
+ * blurred halos. The house keeps corners squared for UI, but photography is
+ * allowed one sculptural gesture per frame (arch, dome, plate or bloom).
+ */
+
+/* Cathedral window — full semicircle top. */
+@utility frame-arch {
+  border-radius: 50% 50% 2px 2px / 62% 62% 2px 2px;
+}
+
+/* Gentle dome — a softer rise, closer to a perfume bottle's shoulder. */
+@utility frame-dome {
+  border-radius: 999px 999px 2px 2px / 34% 34% 2px 2px;
+}
+
+/* Shape morph — lets a frame ease between dome and arch on hover. */
+@utility shape-morph {
+  transition: border-radius 1s var(--ease-editorial);
+}
+
+/* Inner vignette — a breath of depth at the edges of a photograph. */
+@utility frame-vignette {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 90px rgb(23 21 19 / 0.09);
+    border-radius: inherit;
+  }
+}
+
+/*
+ * Offset colour plate — a flat block of blush/taupe sitting behind and beside
+ * the image, shifted down-right. Pure CSS: apply to the figure's wrapper and
+ * the plate renders behind whatever it contains.
+ */
+@utility plate-offset {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0.9rem -0.9rem -0.9rem 0.9rem;
+    background: color-mix(in srgb, var(--color-taupe) 24%, transparent);
+    border-radius: 2px;
+  }
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@utility plate-offset-blush {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: -0.9rem 0.9rem 0.9rem -0.9rem;
+    background: color-mix(in srgb, var(--color-blush) 30%, transparent);
+    border-radius: 2px;
+  }
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/*
+ * Blurred bloom — the image's own colours, heavily blurred, glowing out
+ * behind the sharp frame. Markup: an aria-hidden copy of the image placed
+ * with .bloom-blob inside a .bloom wrapper.
+ */
+@utility bloom {
+  position: relative;
+}
+
+@utility bloom-blob {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  filter: blur(58px) saturate(1.2) brightness(1.05);
+  opacity: 0.45;
+  pointer-events: none;
+  border-radius: 999px;
+}
+
+@utility bloom-blob-dark {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  filter: blur(64px) saturate(1.15) brightness(0.9);
+  opacity: 0.35;
+  pointer-events: none;
+  border-radius: 999px;
+}
+
+/* The bloom breathes — a very slow drift so the halo feels alive. */
+.animate-bloom {
+  animation: bloom-drift 16s ease-in-out infinite alternate;
+}
+
+@keyframes bloom-drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(2%, -2.5%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bloom {
+    animation: none;
+  }
+}

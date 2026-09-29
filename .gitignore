@@ -1,0 +1,21 @@
+
+# Local env — never commit
+.env
+.env.*
+!.env.example
+
+# Dependencies & build output
+node_modules/
+.output/
+.wrangler/
+.tanstack/
+
+# Logs
+dev-server.log
+*.log
+
+# Local tooling
+.agents/
+.claude/
+skills-lock.json
+routeTree.gen.ts
